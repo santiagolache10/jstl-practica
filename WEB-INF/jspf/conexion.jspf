@@ -1,0 +1,19 @@
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%
+    // Si existen las variables de entorno (Render), se usa la base en línea.
+    // Si no existen (computador local), se usa la base de XAMPP.
+    String dbUrlConexion = System.getenv("DB_URL");
+    String dbUsuarioConexion = System.getenv("DB_USER");
+    String dbClaveConexion = System.getenv("DB_PASSWORD");
+
+    if (dbUrlConexion == null || dbUrlConexion.isEmpty()) {
+        dbUrlConexion = "jdbc:mysql://localhost:3306/empleados?useUnicode=true&characterEncoding=UTF-8";
+        dbUsuarioConexion = "root";
+        dbClaveConexion = "";
+    }
+%>
+<sql:setDataSource var="empleados"
+    driver="com.mysql.cj.jdbc.Driver"
+    url="<%= dbUrlConexion %>"
+    user="<%= dbUsuarioConexion %>"
+    password="<%= dbClaveConexion %>" />
